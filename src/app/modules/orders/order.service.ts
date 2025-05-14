@@ -9,7 +9,7 @@ import AppError from '../../errors/AppError';
 import { orderUtils } from './order.utils';
 import Order from './order.model';
 import { clear } from 'console';
-import { TBike } from '../bikes/bike.interface';
+
 
 const createOrder = async (
   user: TUser,

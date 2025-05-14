@@ -1,21 +1,21 @@
 import QueryBuilder from '../../builder/QueryBuilder';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 import { bikeSearchableFields } from './bike.constant';
-import { TBike } from './bike.interface';
+import { IBike,  } from './bike.interface';
 import { Bike } from './bike.model';
 
-const createBikeIntoDB = async (file: any, bikeData: TBike) => {
-  if (file) {
-    const imageName = `${bikeData?.brand}${bikeData?.name}`;
-    const path = file?.path;
+// const createBikeIntoDB = async (file: any, bikeData: IBike) => {
+//   if (file) {
+//     const imageName = `${bikeData?.brand}${bikeData?.name}`;
+//     const path = file?.path;
 
-    //send image to cloudinary
-    const { secure_url } = await sendImageToCloudinary(imageName, path);
-    bikeData.bikeImg = secure_url as string;
-  }
-  const result = await Bike.create(bikeData);
-  return result;
-};
+//     //send image to cloudinary
+//     const { secure_url } = await sendImageToCloudinary(imageName, path);
+//     bikeData.bikeImg = secure_url as string;
+//   }
+//   const result = await Bike.create(bikeData);
+//   return result;
+// };
 
 const getAllBikesFromDB = async (query: Record<string, unknown>) => {
   const bikeQuery = new QueryBuilder(Bike.find(), query)
@@ -44,7 +44,7 @@ const deleteBikeFromDB = async (id: string) => {
   return result;
 };
 
-const updateBikeFromDB = async (id: string, payload: Partial<TBike>) => {
+const updateBikeFromDB = async (id: string, payload: Partial<IBike>) => {
   const result = await Bike.findByIdAndUpdate({ _id: id }, payload, {
     new: true,
   });
@@ -52,7 +52,7 @@ const updateBikeFromDB = async (id: string, payload: Partial<TBike>) => {
 };
 
 export const BikeServices = {
-  createBikeIntoDB,
+  // createBikeIntoDB,
   getAllBikesFromDB,
   getSingleBike,
   deleteBikeFromDB,
