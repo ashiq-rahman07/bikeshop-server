@@ -1,0 +1,338 @@
+export const bikes= [
+  {
+    
+    name: "Velocity Striker 750",
+    brand: "Velocity",
+    category: "Sport",
+    model: "Striker 750",
+    price: 9999,
+    originalPrice: 11999,
+    description: "The Velocity Striker 750 combines cutting-edge technology with sleek design for an unmatched riding experience. This sport bike features a powerful 750cc engine that delivers impressive acceleration and top speed, while maintaining excellent fuel efficiency. The aerodynamic fairing and aggressive stance make this bike a head-turner on any road.",
+    features: [
+      "Advanced fuel injection system",
+      "Dual-channel ABS",
+      "Digital instrument cluster",
+      "LED lighting all around",
+      "Adjustable suspension",
+      "Quick-shifter",
+      "Riding modes: Sport, Road, Rain"
+    ],
+    specifications: {
+      "Engine": "749cc DOHC Inline-4",
+      "Power": "125 HP @ 12,000 rpm",
+      "Torque": "80 Nm @ 9,500 rpm",
+      "Transmission": "6-speed with slipper clutch",
+      "Frame": "Twin-spar aluminum",
+      "Front Suspension": "Inverted fork, fully adjustable",
+      "Rear Suspension": "Monoshock, adjustable preload and rebound",
+      "Front Brake": "Dual 320mm discs, 4-piston calipers",
+      "Rear Brake": "Single 240mm disc, single-piston caliper",
+      "Wheelbase": "1,420mm",
+      "Seat Height": "820mm",
+      "Weight": "187kg (wet)",
+      "Fuel Capacity": "17 liters"
+    },
+    stock: 5,
+    images: [
+      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1580341289255-5b47c98a59dd?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1558980394-0a06c4631733?w=800&h=600&fit=crop"
+    ],
+    rating: 4.8,
+    reviewCount: 24,
+    isStock: true
+  },
+  {
+  
+    name: "Cruiser King Highway Master",
+    brand: "Cruiser King",
+    category: "Cruiser",
+    model: "Highway Master",
+    price: 14999,
+    description: "The Highway Master is built for those long journeys across the country. With its comfortable seating position, robust engine, and classic styling, this cruiser motorcycle embodies the spirit of freedom on the open road. The low center of gravity ensures stability at all speeds, while the high-torque engine provides effortless cruising.",
+    features: [
+      "Air-cooled V-twin engine",
+      "Wide, comfortable seat with passenger backrest",
+      "Cruise control",
+      "Large windshield for wind protection",
+      "Spacious saddlebags",
+      "Premium sound system",
+      "Heated grips"
+    ],
+    specifications: {
+      "Engine": "1800cc V-twin, air-cooled",
+      "Power": "95 HP @ 5,500 rpm",
+      "Torque": "150 Nm @ 3,000 rpm",
+      "Transmission": "6-speed, belt final drive",
+      "Frame": "Steel double cradle",
+      "Front Suspension": "Telescopic fork",
+      "Rear Suspension": "Dual shocks, adjustable preload",
+      "Front Brake": "Dual 300mm discs",
+      "Rear Brake": "Single 292mm disc",
+      "Wheelbase": "1,680mm",
+      "Seat Height": "700mm",
+      "Weight": "320kg (wet)",
+      "Fuel Capacity": "22 liters"
+    },
+    stock: 3,
+    images: [
+      "https://images.unsplash.com/photo-1590213815382-d664043b1038?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1558980664-10e7170b5df9?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=800&h=600&fit=crop"
+    ],
+    rating: 4.9,
+    reviewCount: 36,
+    isStock: true
+  },
+  {
+    name: "UrbanScoot City Navigator",
+    brand: "UrbanScoot",
+    category: "Scooter",
+    model: "City Navigator",
+    price: 2999,
+    originalPrice: 3499,
+    description: "Perfect for urban commuting, the City Navigator scooter combines efficiency, style, and practicality. Its compact design makes navigating through tight city streets a breeze, while the storage compartment provides ample space for your essentials. The economical engine ensures excellent fuel efficiency for your daily commutes.",
+    features: [
+      "Automatic transmission",
+      "Under-seat storage",
+      "USB charging port",
+      "Digital speedometer",
+      "Telescopic front fork",
+      "Combined braking system",
+      "Front glove box"
+    ],
+    specifications: {
+      "Engine": "125cc Single-cylinder, air-cooled",
+      "Power": "9.5 HP @ 8,000 rpm",
+      "Torque": "10 Nm @ 6,500 rpm",
+      "Transmission": "CVT",
+      "Frame": "Underbone steel",
+      "Front Suspension": "Telescopic fork",
+      "Rear Suspension": "Hydraulic shock absorber",
+      "Front Brake": "Disc brake",
+      "Rear Brake": "Drum brake",
+      "Wheelbase": "1,260mm",
+      "Seat Height": "780mm",
+      "Weight": "108kg (wet)",
+      "Fuel Capacity": "6.5 liters"
+    },
+    stock: 15,
+    images: [
+      "https://images.unsplash.com/photo-1619771914272-e3b83056ac56?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1621963849934-f1abdb803302?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1581882898666-440f1cbb3e6c?w=800&h=600&fit=crop"
+    ],
+    rating: 4.6,
+    reviewCount: 52,
+    isStock: false
+  },
+  {
+    name: "DirtDevil XR650 Enduro",
+    brand: "DirtDevil",
+    category: "Off-road",
+    model: "XR650 Enduro",
+    price: 8499,
+    description: "Conquer any terrain with the DirtDevil XR650 Enduro. Built to handle the toughest off-road conditions, this motorcycle features long-travel suspension, robust chassis, and a powerful engine that delivers excellent low-end torque. Whether it's muddy trails, rocky paths, or desert terrain, the XR650 is your perfect companion for adventure.",
+    features: [
+      "Long-travel suspension",
+      "High ground clearance",
+      "Engine skid plate",
+      "Hand guards",
+      "Knobby off-road tires",
+      "Steel frame with aluminum swingarm",
+      "Rally-inspired design"
+    ],
+    specifications: {
+      "Engine": "650cc single-cylinder, DOHC",
+      "Power": "45 HP @ 6,500 rpm",
+      "Torque": "58 Nm @ 5,000 rpm",
+      "Transmission": "5-speed",
+      "Frame": "Tubular steel",
+      "Front Suspension": "Upside-down fork, 280mm travel",
+      "Rear Suspension": "Progressive linkage, 260mm travel",
+      "Front Brake": "300mm disc, 2-piston caliper",
+      "Rear Brake": "240mm disc, single-piston caliper",
+      "Wheelbase": "1,480mm",
+      "Seat Height": "870mm",
+      "Weight": "158kg (dry)",
+      "Fuel Capacity": "12 liters"
+    },
+    stock: 7,
+    images: [
+      "https://images.unsplash.com/photo-1675266873434-5ba73c38a6db?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1616711313493-2f5e0605ddcd?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&h=600&fit=crop"
+    ],
+    rating: 4.7,
+    reviewCount: 19,
+    isStock: true
+  },
+  {
+ 
+    name: "ElectroMoto E-Rider",
+    brand: "ElectroMoto",
+    category: "Electric",
+    model: "E-Rider",
+    price: 11999,
+    description: "The future of motorcycling is here with the E-Rider. This all-electric motorcycle offers instant torque, silent operation, and zero emissions without compromising on style or performance. The advanced battery technology provides impressive range, while the onboard charger allows for convenient charging at home or on the go.",
+    features: [
+      "100% electric powertrain",
+      "Regenerative braking",
+      "Touchscreen dashboard",
+      "Smartphone connectivity",
+      "Multiple riding modes",
+      "Fast charging capability",
+      "LED lighting"
+    ],
+    specifications: {
+      "Motor": "Permanent magnet AC, liquid-cooled",
+      "Power": "70 HP equivalent",
+      "Torque": "116 Nm (instant)",
+      "Battery": "14.4 kWh lithium-ion",
+      "Range": "Up to 250 km city / 170 km highway",
+      "Charging Time": "4 hours (standard) / 1 hour (fast charge)",
+      "Frame": "Aluminum perimeter",
+      "Front Suspension": "Inverted fork, fully adjustable",
+      "Rear Suspension": "Monoshock, fully adjustable",
+      "Front Brake": "Dual 320mm discs, 4-piston calipers",
+      "Rear Brake": "Single 240mm disc, single-piston caliper",
+      "Wheelbase": "1,410mm",
+      "Seat Height": "810mm",
+      "Weight": "220kg",
+      "Max Speed": "180 km/h"
+    },
+    stock: 2,
+    images: [
+      "https://images.unsplash.com/photo-1558980663-8daeaa97bdd6?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1559057287-ce0f57d4c1b9?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1558981001-5864b3250a69?w=800&h=600&fit=crop"
+    ],
+    rating: 4.5,
+    reviewCount: 12,
+    isStock: true
+  },
+  {
+   
+    name: "ClassicMotors Vintage Roadster",
+    brand: "ClassicMotors",
+    category: "Classic",
+    model: "Vintage Roadster",
+    price: 12499,
+    description: "A modern classic that pays homage to the golden era of motorcycling. The Vintage Roadster combines retro styling with modern technology to deliver a nostalgic yet reliable riding experience. The air-cooled engine produces a characteristic thump that enthusiasts love, while modern brakes and suspension ensure safety and comfort.",
+    features: [
+      "Retro styling",
+      "Spoked wheels",
+      "Round headlight and indicators",
+      "Split seats",
+      "Analog instrument cluster",
+      "Chrome exhaust and mirrors",
+      "Modern disc brakes"
+    ],
+    specifications: {
+      "Engine": "650cc parallel-twin, air-cooled",
+      "Power": "47 HP @ 7,000 rpm",
+      "Torque": "52 Nm @ 5,000 rpm",
+      "Transmission": "5-speed",
+      "Frame": "Tubular steel, double cradle",
+      "Front Suspension": "Telescopic fork",
+      "Rear Suspension": "Twin shocks, 5-step preload adjustment",
+      "Front Brake": "320mm disc, 2-piston caliper",
+      "Rear Brake": "240mm disc, single-piston caliper",
+      "Wheelbase": "1,410mm",
+      "Seat Height": "790mm",
+      "Weight": "195kg (wet)",
+      "Fuel Capacity": "14 liters"
+    },
+    stock: 4,
+    images: [
+      "https://images.unsplash.com/photo-1558980394-dbb977039a2e?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1558981003-c5fa0b4189a0?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1558980664-769d59546b3d?w=800&h=600&fit=crop"
+    ],
+    rating: 4.6,
+    reviewCount: 29,
+    isStock: true
+  },
+  {
+    name: "MotoMax Street Fighter 900",
+    brand: "MotoMax",
+    category: "Naked",
+    model: "Street Fighter 900",
+    price: 10999,
+    description: "Raw power meets minimalist design in the Street Fighter 900. This naked bike strips away unnecessary bodywork to reveal the beautiful engine and frame, creating an aggressive, muscular appearance. The upright riding position offers excellent control and comfort for both city commuting and weekend canyon carving.",
+    features: [
+      "Aggressive styling",
+      "Upright riding position",
+      "TFT color display",
+      "Ride-by-wire throttle",
+      "Traction control",
+      "Wheelie control",
+      "Brembo brakes"
+    ],
+    specifications: {
+      "Engine": "899cc inline-three",
+      "Power": "115 HP @ 10,000 rpm",
+      "Torque": "95 Nm @ 8,000 rpm",
+      "Transmission": "6-speed with quickshifter",
+      "Frame": "Aluminum twin-spar",
+      "Front Suspension": "Inverted fork, fully adjustable",
+      "Rear Suspension": "Monoshock, fully adjustable",
+      "Front Brake": "Dual 320mm discs, Brembo 4-piston calipers",
+      "Rear Brake": "Single 240mm disc, single-piston caliper",
+      "Wheelbase": "1,430mm",
+      "Seat Height": "825mm",
+      "Weight": "195kg (wet)",
+      "Fuel Capacity": "15 liters"
+    },
+    stock: 6,
+    images: [
+      "https://images.unsplash.com/photo-1623103493311-68bb15d0df15?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1568773422267-a313e5123a99?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1622185135505-2d795003994a?w=800&h=600&fit=crop"
+    ],
+    rating: 4.7,
+    reviewCount: 32,
+    isStock: false
+  },
+  {
+    name: "AdventureTech Globe Explorer",
+    brand: "AdventureTech",
+    category: "Adventure",
+    model: "Globe Explorer",
+    price: 15999,
+    description: "Ready for global adventure, the Globe Explorer combines long-range touring capability with genuine off-road prowess. The comfortable ergonomics, wind protection, and generous luggage capacity make it perfect for long journeys, while the robust suspension and dual-purpose tires allow you to explore beyond where the pavement ends.",
+    features: [
+      "Tall windscreen",
+      "Adjustable seat and handlebar",
+      "Pannier and top box mounts",
+      "Long-travel suspension",
+      "Crash bars",
+      "Handguards",
+      "Advanced rider aids"
+    ],
+    specifications: {
+      "Engine": "1200cc parallel-twin",
+      "Power": "110 HP @ 7,500 rpm",
+      "Torque": "120 Nm @ 5,500 rpm",
+      "Transmission": "6-speed with electronic shift assist",
+      "Frame": "Tubular steel trellis",
+      "Front Suspension": "Inverted fork, electronically adjustable",
+      "Rear Suspension": "Monoshock, electronically adjustable",
+      "Front Brake": "Dual 320mm discs, 4-piston calipers",
+      "Rear Brake": "Single 280mm disc, 2-piston caliper",
+      "Wheelbase": "1,540mm",
+      "Seat Height": "850mm (adjustable)",
+      "Weight": "245kg (wet)",
+      "Fuel Capacity": "23 liters"
+    },
+    stock: 3,
+    images: [
+      "https://images.unsplash.com/photo-1581185679651-3f5e04f30d7e?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1658126105217-4a35f6d51367?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1579118319976-8bf2a2f78703?w=800&h=600&fit=crop"
+    ],
+    rating: 4.9,
+    reviewCount: 27,
+    isStock: true
+  }
+];
