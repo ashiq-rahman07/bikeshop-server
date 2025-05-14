@@ -1,6 +1,5 @@
 import { Model } from 'mongoose';
 
-
 export enum GearCategory {
   HELMET = 'Helmet',
   GLOVES = 'Gloves',
@@ -13,16 +12,14 @@ export enum GearCategory {
 }
 
 export enum GearBrand {
-  RideTalk = "RideTalk",
-  ThermoTech = "ThermoTech",
-  AdventureGear = "AdventureGear",
-  RideReady = "RideReady",
-  RoadMaster = "RoadMaster",
-  RaceTech = "RaceTech",
-  SafeRide = "SafeRide",
+  RideTalk = 'RideTalk',
+  ThermoTech = 'ThermoTech',
+  AdventureGear = 'AdventureGear',
+  RideReady = 'RideReady',
+  RoadMaster = 'RoadMaster',
+  RaceTech = 'RaceTech',
+  SafeRide = 'SafeRide',
 }
-
-
 
 export interface IGear {
   name: string;
@@ -39,11 +36,7 @@ export interface IGear {
   images: string[];
   rating?: number;
   reviewCount?: number;
-  isStock: boolean
+  isStock: boolean;
 }
-
-
-
-
 
 export type GearModel = Model<IGear, Record<string, unknown>>;

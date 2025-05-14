@@ -1,28 +1,30 @@
+import { Gear } from './gear.model';
 import express, { NextFunction, Request, Response } from 'express';
-import { BikeControllers } from './gear.controller';
+
 import { upload } from '../../utils/sendImageToCloudinary';
 import validateRequest from '../../middlewares/validateRequest';
 
-import { bikeValidation } from './gear.validation';
 import auth from '../../middlewares/auth';
+import { GearControllers } from './gear.controller';
+import { gearValidation } from './gear.validation';
 
 const router = express.Router();
 
-router.post(
-  '/create-product',
-  auth('admin'),
-  validateRequest(bikeValidation.bikeValidationCreateSchema),
-  BikeControllers.createBike,
-);
-router.get('/:productId', BikeControllers.getSingleBike);
-router.get('/', BikeControllers.getAllBikes);
-router.delete('/:productId', auth('admin'), BikeControllers.deleteBike);
+// router.post(
+//   '/create-product',
+//   auth('admin'),
+//   validateRequest(bikeValidation.bikeValidationCreateSchema),
+//   BikeControllers.createBike,
+// );
+router.get('/:gearId', GearControllers.getSingleGear);
+router.get('/', GearControllers.getAllGears);
+router.delete('/:gearId', auth('admin'), GearControllers.getAllGears);
 
 router.patch(
   '/:productId',
   auth('admin'),
-  validateRequest(bikeValidation.bikeValidationUpdateSchema),
-  BikeControllers.updateBike,
+  // validateRequest(gearValidation.),
+  GearControllers.updateGear,
 );
 
-export const BikeRouter = router;
+export const GearRouter = router;

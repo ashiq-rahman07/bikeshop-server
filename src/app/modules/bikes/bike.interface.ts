@@ -2,27 +2,26 @@ import { Model } from 'mongoose';
 
 // Yamaha · Honda · Suzuki · Hero · Tvs · Bajaj · Lifan ·
 export enum BikeBrand {
-  Velocity = "Velocity",
-  CruiserKing = "Cruiser King",
-  UrbanScoot = "UrbanScoot",
-  DirtDevil = "DirtDevil",
-  ElectroMoto = "ElectroMoto",
-  ClassicMotors = "ClassicMotors",
-  MotoMax = "MotoMax",
-  Yamaha = "Yamaha",
-  Honda = "Honda",
-  Suzuki = "Suzuki",
+  Velocity = 'Velocity',
+  CruiserKing = 'Cruiser King',
+  UrbanScoot = 'UrbanScoot',
+  DirtDevil = 'DirtDevil',
+  ElectroMoto = 'ElectroMoto',
+  ClassicMotors = 'ClassicMotors',
+  MotoMax = 'MotoMax',
+  Yamaha = 'Yamaha',
+  Honda = 'Honda',
+  Suzuki = 'Suzuki',
 }
 
-
 export enum BikeCategory {
-  Sport = "Sport",
-  Cruiser = "Cruiser",
-  Scooter = "Scooter",
-  OffRoad = "Off-road",
-  Electric = "Electric",
-  Classic = "Classic",
-  Naked = "Naked",
+  Sport = 'Sport',
+  Cruiser = 'Cruiser',
+  Scooter = 'Scooter',
+  OffRoad = 'Off-road',
+  Electric = 'Electric',
+  Classic = 'Classic',
+  Naked = 'Naked',
 }
 export interface IBike {
   id: string;
@@ -40,8 +39,7 @@ export interface IBike {
   images: string[];
   rating?: number;
   reviewCount?: number;
-  isStock: boolean
+  isStock: boolean;
 }
-
 
 export type BikeModel = Model<IBike, Record<string, unknown>>;

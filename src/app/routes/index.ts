@@ -3,6 +3,7 @@ import { OrderRouter } from '../modules/orders/order.route';
 import { BikeRouter } from '../modules/bikes/bike.route';
 import { UserRoutes } from './../modules/user/user.route';
 import { Router } from 'express';
+import { GearRouter } from '../modules/gear/gear.route';
 
 const router = Router();
 
@@ -22,6 +23,10 @@ const moduleRoutes = [
   {
     path: '/bike',
     route: BikeRouter,
+  },
+  {
+    path: '/gear',
+    route: GearRouter,
   },
   {
     path: '/auth',

@@ -4,20 +4,18 @@ import { bikeSearchableFields } from './gear.constant';
 import { IGear } from './gear.interface';
 import { Gear } from './gear.model';
 
+// const createGear = async (file: any, bikeData: IGear) => {
+//   if (file) {
+//     const imageName = `${bikeData?.brand}${bikeData?.name}`;
+//     const path = file?.path;
 
-
-const createGearIntoDB = async (file: any, bikeData: IGear) => {
-  if (file) {
-    const imageName = `${bikeData?.brand}${bikeData?.name}`;
-    const path = file?.path;
-
-    //send image to cloudinary
-    const { secure_url } = await sendImageToCloudinary(imageName, path);
-    bikeData.bikeImg = secure_url as string;
-  }
-  const result = await Bike.create(bikeData);
-  return result;
-};
+//     //send image to cloudinary
+//     const { secure_url } = await sendImageToCloudinary(imageName, path);
+//     bikeData.bikeImg = secure_url as string;
+//   }
+//   const result = await Bike.create(bikeData);
+//   return result;
+// };
 
 const getAllGears = async (query: Record<string, unknown>) => {
   const gearQuery = new QueryBuilder(Gear.find(), query)
@@ -53,10 +51,9 @@ const updateGear = async (id: string, payload: Partial<IGear>) => {
   return result;
 };
 
-export const BikeServices = {
-  createBikeIntoDB,
-  getAllBikesFromDB,
-  getSingleBike,
-  deleteBikeFromDB,
-  updateBikeFromDB,
+export const GearServices = {
+  getAllGears,
+  getSingleGear,
+  deleteGear,
+  updateGear,
 };

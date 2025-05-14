@@ -1,8 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { GearBrand, GearCategory, IGear } from './gear.interface';
 
-
-
 const gearSchema = new Schema<IGear>(
   {
     name: { type: String, required: true },
@@ -31,13 +29,12 @@ const gearSchema = new Schema<IGear>(
     isStock: { type: Boolean, default: true },
   },
   {
-    
     timestamps: true,
-  }
+  },
 );
 
 // Export model
-export const Gear = model<IGear>("Gear", gearSchema);
+export const Gear = model<IGear>('Gear', gearSchema);
 
 // Add a static method to the schema
 //   bikeSchema.statics.BikedExists = async function (id: string): Promise<TBike | null> {

@@ -1,40 +1,41 @@
 import { Request, Response } from 'express';
-import { BikeServices } from './gear.service';
+
 import httpStatus from 'http-status';
 // import bikeValidationSchema from './bike.validation';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { GearServices } from './gear.service';
 
-const createBike = catchAsync(async (req, res) => {
-  const result = await BikeServices.createBikeIntoDB(req.file, req.body);
+// const createGear = catchAsync(async (req, res) => {
+//   const result = await BikeServices.createBikeIntoDB(req.file, req.body);
 
+//   sendResponse(res, {
+//     success: true,
+//     message: 'Product are created successfully',
+//     statusCode: httpStatus.OK,
+//     data: result,
+//   });
+// });
+
+const getAllGears = catchAsync(async (req, res) => {
+  const result = await GearServices.getAllGears(req.query);
   sendResponse(res, {
-    success: true,
-    message: 'Product are created successfully',
-    statusCode: httpStatus.OK,
-    data: result,
-  });
-});
-
-const getAllBikes = catchAsync(async (req, res) => {
-  const result = await BikeServices.getAllBikesFromDB(req.query);
-  sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Product are retrieved succesfully',
+    message: 'Gear are retrieved successfully',
     meta: result.meta,
     data: result.result,
   });
 });
 
-const getSingleBike = async (req: Request, res: Response) => {
+const getSingleGear = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
+    const { gearId } = req.params;
 
-    const result = await BikeServices.getSingleBike(productId);
+    const result = await GearServices.getSingleGear(gearId);
 
     res.status(200).json({
-      message: 'Bike are retrieved succesfully',
+      message: 'Gear are retrieved successfully',
       status: true,
       data: result,
     });
@@ -47,14 +48,14 @@ const getSingleBike = async (req: Request, res: Response) => {
   }
 };
 
-const deleteBike = async (req: Request, res: Response) => {
+const deleteGear = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
+    const { gearId } = req.params;
 
-    await BikeServices.deleteBikeFromDB(productId);
+    await GearServices.deleteGear(gearId);
 
     res.status(200).json({
-      message: 'Bike are delete succesfully',
+      message: 'Gear are delete successfully',
       status: true,
 
       data: {},
@@ -67,15 +68,12 @@ const deleteBike = async (req: Request, res: Response) => {
     });
   }
 };
-const updateBike = async (req: Request, res: Response) => {
+const updateGear = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
-    const updateBikeData = req.body;
+    const { gearId } = req.params;
+    const updateGearData = req.body;
 
-    const result = await BikeServices.updateBikeFromDB(
-      productId,
-      updateBikeData,
-    );
+    const result = await GearServices.updateGear(gearId, updateGearData);
 
     res.status(200).json({
       message: 'Bike are update succesfully',
@@ -92,10 +90,9 @@ const updateBike = async (req: Request, res: Response) => {
   }
 };
 
-export const BikeControllers = {
-  createBike,
-  getAllBikes,
-  getSingleBike,
-  deleteBike,
-  updateBike,
+export const GearControllers = {
+  getAllGears,
+  getSingleGear,
+  deleteGear,
+  updateGear,
 };
