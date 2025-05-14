@@ -8,12 +8,12 @@ import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
-router.post(
-  '/create-product',
-  auth('admin'),
-  validateRequest(bikeValidation.bikeValidationCreateSchema),
-  BikeControllers.createBike,
-);
+// router.post(
+//   '/create-product',
+//   auth('admin'),
+//   validateRequest(bikeValidation.bikeValidationCreateSchema),
+//   BikeControllers.createBike,
+// );
 router.get('/:productId', BikeControllers.getSingleBike);
 router.get('/', BikeControllers.getAllBikes);
 router.delete('/:productId', auth('admin'), BikeControllers.deleteBike);

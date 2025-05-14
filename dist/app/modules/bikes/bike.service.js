@@ -14,20 +14,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BikeServices = void 0;
 const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
-const sendImageToCloudinary_1 = require("../../utils/sendImageToCloudinary");
 const bike_constant_1 = require("./bike.constant");
 const bike_model_1 = require("./bike.model");
-const createBikeIntoDB = (file, bikeData) => __awaiter(void 0, void 0, void 0, function* () {
-    if (file) {
-        const imageName = `${bikeData === null || bikeData === void 0 ? void 0 : bikeData.brand}${bikeData === null || bikeData === void 0 ? void 0 : bikeData.name}`;
-        const path = file === null || file === void 0 ? void 0 : file.path;
-        //send image to cloudinary
-        const { secure_url } = yield (0, sendImageToCloudinary_1.sendImageToCloudinary)(imageName, path);
-        bikeData.bikeImg = secure_url;
-    }
-    const result = yield bike_model_1.Bike.create(bikeData);
-    return result;
-});
+// const createBikeIntoDB = async (file: any, bikeData: IBike) => {
+//   if (file) {
+//     const imageName = `${bikeData?.brand}${bikeData?.name}`;
+//     const path = file?.path;
+//     //send image to cloudinary
+//     const { secure_url } = await sendImageToCloudinary(imageName, path);
+//     bikeData.bikeImg = secure_url as string;
+//   }
+//   const result = await Bike.create(bikeData);
+//   return result;
+// };
 const getAllBikesFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const bikeQuery = new QueryBuilder_1.default(bike_model_1.Bike.find(), query)
         .search(bike_constant_1.bikeSearchableFields)
@@ -57,7 +56,7 @@ const updateBikeFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, func
     return result;
 });
 exports.BikeServices = {
-    createBikeIntoDB,
+    // createBikeIntoDB,
     getAllBikesFromDB,
     getSingleBike,
     deleteBikeFromDB,

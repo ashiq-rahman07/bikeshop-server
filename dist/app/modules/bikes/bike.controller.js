@@ -18,15 +18,15 @@ const http_status_1 = __importDefault(require("http-status"));
 // import bikeValidationSchema from './bike.validation';
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
-const createBike = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield bike_service_1.BikeServices.createBikeIntoDB(req.file, req.body);
-    (0, sendResponse_1.default)(res, {
-        success: true,
-        message: 'Product are created successfully',
-        statusCode: http_status_1.default.OK,
-        data: result,
-    });
-}));
+// const createBike = catchAsync(async (req, res) => {
+//   const result = await BikeServices.createBikeIntoDB(req.file, req.body);
+//   sendResponse(res, {
+//     success: true,
+//     message: 'Product are created successfully',
+//     statusCode: httpStatus.OK,
+//     data: result,
+//   });
+// });
 const getAllBikes = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield bike_service_1.BikeServices.getAllBikesFromDB(req.query);
     (0, sendResponse_1.default)(res, {
@@ -93,7 +93,7 @@ const updateBike = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.BikeControllers = {
-    createBike,
+    // createBike,
     getAllBikes,
     getSingleBike,
     deleteBike,
