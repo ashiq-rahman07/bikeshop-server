@@ -27,6 +27,7 @@ export const gearProducts = [
       'Battery Life': '10 hours (Bluetooth)',
       Warranty: '5 years',
     },
+
     stock: 15,
     images: [
       'https://images.unsplash.com/photo-1552568283-2667b8e8d9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
@@ -144,7 +145,7 @@ export const gearProducts = [
     ],
     rating: 4.6,
     reviewCount: 24,
-    isStock: false,
+    isStock: true,
   },
   {
     name: 'Armored Riding Pants',
@@ -181,7 +182,7 @@ export const gearProducts = [
     ],
     rating: 4.5,
     reviewCount: 31,
-    isStock: false,
+    isStock: true,
   },
   {
     name: 'Hydration Backpack',
@@ -253,7 +254,7 @@ export const gearProducts = [
     ],
     rating: 4.7,
     reviewCount: 64,
-    isStock: false,
+    isStock: true,
   },
   {
     name: 'Wireless Helmet Communicator',
