@@ -39,6 +39,7 @@ const gearValidationCreateSchema = zod_1.z.object({
         rating: zod_1.z.number().min(0).max(5).optional(),
         reviewCount: zod_1.z.number().int().nonnegative().optional(),
         isStock: zod_1.z.boolean().optional(),
+        productType: zod_1.z.string().optional()
     }),
 });
 // const bikeValidationUpdateSchema = z.object({

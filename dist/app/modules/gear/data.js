@@ -143,7 +143,7 @@ exports.gearProducts = [
         ],
         rating: 4.6,
         reviewCount: 24,
-        isStock: false,
+        isStock: true,
     },
     {
         name: 'Armored Riding Pants',
@@ -179,7 +179,7 @@ exports.gearProducts = [
         ],
         rating: 4.5,
         reviewCount: 31,
-        isStock: false,
+        isStock: true,
     },
     {
         name: 'Hydration Backpack',
@@ -249,7 +249,7 @@ exports.gearProducts = [
         ],
         rating: 4.7,
         reviewCount: 64,
-        isStock: false,
+        isStock: true,
     },
     {
         name: 'Wireless Helmet Communicator',
