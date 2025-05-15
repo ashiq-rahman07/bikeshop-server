@@ -40,6 +40,7 @@ export interface IBike {
   rating?: number;
   reviewCount?: number;
   isStock: boolean;
+  productType?: 'bike'
 }
 
 export type BikeModel = Model<IBike, Record<string, unknown>>;

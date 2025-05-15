@@ -6,6 +6,8 @@ import { StatusCodes } from 'http-status-codes';
 import router from './app/routes';
 import globalErrorHandler from './app/middlewares/globalErrorhandler';
 import notFound from './app/middlewares/notFound';
+import { Gear } from './app/modules/gear/gear.model';
+import { Bike } from './app/modules/bikes/bike.model';
 // import globalErrorHandler from './app/middleware/globalErrorHandler';
 // import notFound from './app/middleware/notFound';
 
@@ -49,6 +51,8 @@ app.get('/', (req: Request, res: Response) => {
     },
   });
 });
+
+
 
 app.use(globalErrorHandler);
 

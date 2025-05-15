@@ -26,6 +26,7 @@ export interface IGear {
   brand: GearBrand;
   category: GearCategory;
   model: string;
+  productType?: 'gear'
   price: number;
   description: string;
   features: string[];

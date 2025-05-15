@@ -15,6 +15,7 @@ const bikeSchema = new Schema<IBike>(
       required: true,
     },
     model: { type: String, required: true },
+    productType: { type: String, default:'bike' },
     price: { type: Number, required: true },
     description: { type: String, required: true },
     features: { type: [String], default: [] },

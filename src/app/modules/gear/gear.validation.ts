@@ -38,6 +38,7 @@ const gearValidationCreateSchema = z.object({
     rating: z.number().min(0).max(5).optional(),
     reviewCount: z.number().int().nonnegative().optional(),
     isStock: z.boolean().optional(),
+    productType:z.string().optional()
   }),
 });
 
