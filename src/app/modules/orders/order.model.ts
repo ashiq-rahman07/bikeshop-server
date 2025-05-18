@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { model, Schema, Types } from 'mongoose';
 import { IOrder, TOrder } from './order.interface';
 
 const OrderSchema = new Schema<IOrder>(
@@ -9,18 +9,10 @@ const OrderSchema = new Schema<IOrder>(
       required: true,
     },
     products: [
-      {
-        product: {
-          type: Schema.Types.ObjectId,
-          ref: 'Bike',
-          required: true,
-        },
-
-        quantity: {
-          type: Number,
-          required: true,
-          min: 1,
-        },
+     {
+        product: { type: Types.ObjectId, required: true },
+        quantity: { type: Number, required: true },
+        productType: { type: String, enum: ['bike', 'gear'], required: true }, // NEW
       },
     ],
     totalPrice: {

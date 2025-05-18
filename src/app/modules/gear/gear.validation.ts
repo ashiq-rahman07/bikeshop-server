@@ -23,7 +23,7 @@ export const GearBrandEnum = z.enum([
   'SafeRide',
 ]);
 // Define the Zod schema
-const gearValidationCreateSchema = z.object({
+const gearValidationSchema = z.object({
   body: z.object({
     name: z.string().min(1),
     brand: GearBrandEnum,
@@ -74,7 +74,7 @@ const gearValidationCreateSchema = z.object({
 //   }),
 // });
 
-export const gearValidation = {
-  gearValidationCreateSchema,
+export const GearValidation = {
+  gearValidationSchema,
   // bikeValidationUpdateSchema,
 };

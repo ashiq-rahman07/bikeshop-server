@@ -15,7 +15,6 @@ const gearSchema = new Schema<IGear>(
       required: true,
     },
     model: { type: String, required: true },
-    productType: { type: String, default:'gear' },
     price: { type: Number, required: true },
     description: { type: String, required: true },
     features: { type: [String], default: [] },

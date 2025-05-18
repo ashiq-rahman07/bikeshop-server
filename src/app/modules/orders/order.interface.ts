@@ -16,9 +16,11 @@ export interface IOrder extends Document {
   products: {
     product: Types.ObjectId;
     quantity: number;
+     productType: 'gear' | 'bike';
   }[];
   totalPrice: number;
   status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
+ 
   transaction: {
     id: string;
     transactionStatus: string;

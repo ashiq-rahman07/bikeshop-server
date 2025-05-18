@@ -1,3 +1,4 @@
+import { IJwtPayload } from './../auth/auth.interface';
 import { Request, Response } from 'express';
 
 import httpStatus from 'http-status';
@@ -5,17 +6,21 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { GearServices } from './gear.service';
+import { IImageFiles } from '../../interface/IImageFile';
 
-// const createGear = catchAsync(async (req, res) => {
-//   const result = await BikeServices.createBikeIntoDB(req.file, req.body);
 
-//   sendResponse(res, {
-//     success: true,
-//     message: 'Product are created successfully',
-//     statusCode: httpStatus.OK,
-//     data: result,
-//   });
-// });
+const createGear = catchAsync(async (req, res) => {
+   const files = req.files;
+   const user = req.user
+  const result = await GearServices.createGear(user as IJwtPayload, req.body,  files as IImageFiles);
+
+  sendResponse(res, {
+    success: true,
+    message: 'Product are created successfully',
+    statusCode: httpStatus.OK,
+    data: result,
+  });
+});
 
 const getAllGears = catchAsync(async (req, res) => {
   const result = await GearServices.getAllGears(req.query);
@@ -91,6 +96,7 @@ const updateGear = async (req: Request, res: Response) => {
 };
 
 export const GearControllers = {
+  createGear,
   getAllGears,
   getSingleGear,
   deleteGear,

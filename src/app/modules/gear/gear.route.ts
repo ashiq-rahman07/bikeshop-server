@@ -6,16 +6,18 @@ import validateRequest from '../../middlewares/validateRequest';
 
 import auth from '../../middlewares/auth';
 import { GearControllers } from './gear.controller';
-import { gearValidation } from './gear.validation';
+import { GearValidation } from './gear.validation';
+import { parseBody } from '../../middlewares/bodyParser';
 
 const router = express.Router();
 
-// router.post(
-//   '/create-product',
-//   auth('admin'),
-//   validateRequest(bikeValidation.bikeValidationCreateSchema),
-//   BikeControllers.createBike,
-// );
+router.post(
+  '/create-gear',
+  auth('admin'),
+  validateRequest(GearValidation.gearValidationSchema),
+  parseBody,
+  GearControllers.createGear,
+);
 router.get('/:gearId', GearControllers.getSingleGear);
 router.get('/', GearControllers.getAllGears);
 router.delete('/:gearId', auth('admin'), GearControllers.getAllGears);
