@@ -8,8 +8,9 @@ import { bikeSearchableFields } from './gear.constant';
 import { IGear } from './gear.interface';
 import { Gear } from './gear.model';
 
-const createGear = async ( authUser: IJwtPayload, gearData: Partial<IGear>,
-  gearImages: IImageFiles,
+const createGear = async (   gearData: Partial<IGear>,
+   gearImages: IImageFiles,
+   authUser: IJwtPayload
   ) => {
    const { images } = gearImages;
   if (!images || images.length === 0) {

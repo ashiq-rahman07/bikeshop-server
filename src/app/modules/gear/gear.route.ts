@@ -8,14 +8,17 @@ import auth from '../../middlewares/auth';
 import { GearControllers } from './gear.controller';
 import { GearValidation } from './gear.validation';
 import { parseBody } from '../../middlewares/bodyParser';
+import { multerUpload } from '../../config/multer.config';
 
 const router = express.Router();
 
 router.post(
   '/create-gear',
   auth('admin'),
+   multerUpload.fields([{ name: 'images' }]),
+   parseBody,
   validateRequest(GearValidation.gearValidationSchema),
-  parseBody,
+
   GearControllers.createGear,
 );
 router.get('/:gearId', GearControllers.getSingleGear);
