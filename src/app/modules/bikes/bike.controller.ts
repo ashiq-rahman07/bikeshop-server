@@ -4,17 +4,22 @@ import httpStatus from 'http-status';
 // import bikeValidationSchema from './bike.validation';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { IImageFiles } from '../../interface/IImageFile';
+import { IJwtPayload } from '../auth/auth.interface';
 
-// const createBike = catchAsync(async (req, res) => {
-//   const result = await BikeServices.createBikeIntoDB(req.file, req.body);
+const createBike = catchAsync(async (req, res) => {
+    console.log("controleer",req.body, req.files)
+    const result = await BikeServices.createBike(req.body,
+      req.files as IImageFiles,
+      req.user as IJwtPayload);
 
-//   sendResponse(res, {
-//     success: true,
-//     message: 'Product are created successfully',
-//     statusCode: httpStatus.OK,
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    success: true,
+    message: 'Bike are created successfully',
+    statusCode: httpStatus.OK,
+    data: result,
+  });
+});
 
 const getAllBikes = catchAsync(async (req, res) => {
   const result = await BikeServices.getAllBikesFromDB(req.query);
@@ -56,7 +61,6 @@ const deleteBike = async (req: Request, res: Response) => {
     res.status(200).json({
       message: 'Bike are delete succesfully',
       status: true,
-
       data: {},
     });
   } catch (err: any) {
@@ -93,7 +97,7 @@ const updateBike = async (req: Request, res: Response) => {
 };
 
 export const BikeControllers = {
-  // createBike,
+  createBike,
   getAllBikes,
   getSingleBike,
   deleteBike,

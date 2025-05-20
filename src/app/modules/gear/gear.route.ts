@@ -23,7 +23,7 @@ router.post(
 );
 router.get('/:gearId', GearControllers.getSingleGear);
 router.get('/', GearControllers.getAllGears);
-router.delete('/:gearId', auth('admin'), GearControllers.getAllGears);
+router.delete('/:gearId', auth('admin'), GearControllers.deleteGear);
 
 router.patch(
   '/:productId',

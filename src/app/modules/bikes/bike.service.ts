@@ -1,21 +1,32 @@
+import { StatusCodes } from 'http-status-codes';
 import QueryBuilder from '../../builder/QueryBuilder';
+import AppError from '../../errors/AppError';
+import { IImageFiles } from '../../interface/IImageFile';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
+import { IJwtPayload } from '../auth/auth.interface';
+import { IGear } from '../gear/gear.interface';
 import { bikeSearchableFields } from './bike.constant';
 import { IBike,  } from './bike.interface';
 import { Bike } from './bike.model';
 
-// const createBikeIntoDB = async (file: any, bikeData: IBike) => {
-//   if (file) {
-//     const imageName = `${bikeData?.brand}${bikeData?.name}`;
-//     const path = file?.path;
-
-//     //send image to cloudinary
-//     const { secure_url } = await sendImageToCloudinary(imageName, path);
-//     bikeData.bikeImg = secure_url as string;
-//   }
-//   const result = await Bike.create(bikeData);
-//   return result;
-// };
+const createBike = async (bikData: Partial<IGear>,
+   gearImages: IImageFiles,
+   authUser: IJwtPayload
+  ) => {
+   const { images } = gearImages;
+  if (!images || images.length === 0) {
+    throw new AppError(StatusCodes.BAD_REQUEST, 'Gear images are required.');
+  }
+  bikData.images = images.map((image) => image.path);
+  const createGear = new Bike({
+    ...bikData,
+  });
+  const result = await createGear.save();
+  // houseData.images = images.map((image) => image.path);
+  // const rentalHouse = await RentalHouse.create(houseData);
+  // return rentalHouse;
+  return result;
+};
 
 const getAllBikesFromDB = async (query: Record<string, unknown>) => {
   const bikeQuery = new QueryBuilder(Bike.find(), query)
@@ -52,7 +63,7 @@ const updateBikeFromDB = async (id: string, payload: Partial<IBike>) => {
 };
 
 export const BikeServices = {
-  // createBikeIntoDB,
+  createBike,
   getAllBikesFromDB,
   getSingleBike,
   deleteBikeFromDB,
