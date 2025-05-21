@@ -8,7 +8,7 @@ import { IImageFiles } from '../../interface/IImageFile';
 import { IJwtPayload } from '../auth/auth.interface';
 
 const createBike = catchAsync(async (req, res) => {
-    console.log("controleer",req.body, req.files)
+  
     const result = await BikeServices.createBike(req.body,
       req.files as IImageFiles,
       req.user as IJwtPayload);

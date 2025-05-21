@@ -12,7 +12,7 @@ import { IImageFiles } from '../../interface/IImageFile';
 const createGear = catchAsync(async (req, res) => {
   //  const files = req.files;
   //  const user = req.user
-  console.log("controleer",req.body, req.files)
+  
   const result = await GearServices.createGear(   req.body,
     req.files as IImageFiles,
     req.user as IJwtPayload);

@@ -21,9 +21,7 @@ const createGear = async (   gearData: Partial<IGear>,
     ...gearData,
   });
   const result = await createGear.save();
-  // houseData.images = images.map((image) => image.path);
-  // const rentalHouse = await RentalHouse.create(houseData);
-  // return rentalHouse;
+
   return result;
 };
 

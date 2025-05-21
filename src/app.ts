@@ -8,13 +8,14 @@ import globalErrorHandler from './app/middlewares/globalErrorhandler';
 import notFound from './app/middlewares/notFound';
 import { Gear } from './app/modules/gear/gear.model';
 import { Bike } from './app/modules/bikes/bike.model';
+import config from './app/config';
 // import globalErrorHandler from './app/middleware/globalErrorHandler';
 // import notFound from './app/middleware/notFound';
 
 const app: Application = express();
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: `${config.cors_url}`, credentials: true }));
 
 app.use(cookieParser());
 
