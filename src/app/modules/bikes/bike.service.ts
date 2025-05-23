@@ -55,11 +55,21 @@ const deleteBikeFromDB = async (id: string) => {
   return result;
 };
 
-const updateBikeFromDB = async (id: string, payload: Partial<IBike>) => {
-  const result = await Bike.findByIdAndUpdate({ _id: id }, payload, {
-    new: true,
-  });
-  return result;
+const updateBikeFromDB = async (bikeId : string,
+     bikeData: Partial<IGear>,
+      bikeImages: IImageFiles,) => {
+  const updatedBike = await Bike.findByIdAndUpdate(
+  bikeId,
+  {
+    ...bikeData,
+    ...(bikeImages?.images && {
+      images: bikeImages.images.map((img) => img.path),
+    }),
+  },
+  { new: true, runValidators: true }
+);
+
+return updatedBike
 };
 
 export const BikeServices = {

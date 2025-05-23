@@ -76,15 +76,20 @@ const deleteGear = async (req: Request, res: Response) => {
     });
   }
 };
+
 const updateGear = async (req: Request, res: Response) => {
   try {
     const { gearId } = req.params;
-    const updateGearData = req.body;
 
-    const result = await GearServices.updateGear(gearId, updateGearData);
+
+    const result = await GearServices.updateGear(
+      gearId,
+      req.body,
+      req.files as IImageFiles,
+    );
 
     res.status(200).json({
-      message: 'Bike are update succesfully',
+      message: 'Gear are update successfully',
       status: true,
 
       data: result,

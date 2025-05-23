@@ -71,14 +71,16 @@ const deleteBike = async (req: Request, res: Response) => {
     });
   }
 };
+
 const updateBike = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const updateBikeData = req.body;
+
 
     const result = await BikeServices.updateBikeFromDB(
       productId,
-      updateBikeData,
+      req.body,
+      req.files as IImageFiles,
     );
 
     res.status(200).json({

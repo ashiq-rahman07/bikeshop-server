@@ -46,34 +46,21 @@ const bikeValidationCreateSchema = z.object({
 });
 
 const bikeValidationUpdateSchema = z.object({
-  body: z.object({
-    name: z
-      .string()
-      .min(1, { message: 'Name is required and cannot be empty' })
-      .optional(),
+   body: z.object({
+    name: z.string().min(1).optional(),
     brand: BikeBrandEnum.optional(),
-    model: z
-      .string()
-      .min(1, { message: 'Model is required and cannot be empty' })
-      .optional(),
-    price: z
-      .number()
-      .min(0, { message: 'Price must be a positive number' })
-      .optional(),
     category: BikeCategoryEnum.optional(),
-    description: z
-      .string()
-      .min(1, { message: 'Description is required and cannot be empty' })
-      .optional(),
-    quantity: z
-      .number()
-      .int({ message: 'Quantity must be an integer' })
-      .min(0, { message: 'Quantity cannot be negative' })
-      .optional(),
-    bikeImg: z.string().optional(),
-    inStock: z
-      .boolean({ required_error: 'InStock status is required' })
-      .optional(),
+    model: z.string().min(1).optional(),
+    price: z.number().nonnegative().optional(),
+    description: z.string().min(1).optional(),
+    features: z.array(z.string()).optional(),
+    specifications: z.record(z.string()).optional(),
+    stock: z.number().int().nonnegative().optional(),
+    // images: z.array(z.string().url()),
+    rating: z.number().min(0).max(5).optional(),
+    reviewCount: z.number().int().nonnegative().optional(),
+    isStock: z.boolean().optional(),
+     
   }),
 });
 

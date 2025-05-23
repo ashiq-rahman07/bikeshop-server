@@ -22,9 +22,13 @@ router.get('/:productId', BikeControllers.getSingleBike);
 router.get('/', BikeControllers.getAllBikes);
 router.delete('/:productId', auth('admin'), BikeControllers.deleteBike);
 
+
 router.patch(
   '/:productId',
   auth('admin'),
+    
+   multerUpload.fields([{ name: 'images' }]),
+   parseBody,
   validateRequest(bikeValidation.bikeValidationUpdateSchema),
   BikeControllers.updateBike,
 );

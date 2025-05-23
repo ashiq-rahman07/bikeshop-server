@@ -25,10 +25,14 @@ router.get('/:gearId', GearControllers.getSingleGear);
 router.get('/', GearControllers.getAllGears);
 router.delete('/:gearId', auth('admin'), GearControllers.deleteGear);
 
+
 router.patch(
-  '/:productId',
+  '/:gearId',
   auth('admin'),
-  // validateRequest(gearValidation.),
+
+   multerUpload.fields([{ name: 'images' }]),
+   parseBody,
+  validateRequest(GearValidation.gearValidationUpdateSchema),
   GearControllers.updateGear,
 );
 

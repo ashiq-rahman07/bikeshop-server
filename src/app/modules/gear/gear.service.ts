@@ -52,11 +52,21 @@ const deleteGear = async (id: string) => {
   return result;
 };
 
-const updateGear = async (id: string, payload: Partial<IGear>) => {
-  const result = await Gear.findByIdAndUpdate({ _id: id }, payload, {
-    new: true,
-  });
-  return result;
+const updateGear =  async (gearId : string,
+     gearData: Partial<IGear>,
+      gearImages: IImageFiles,) => {
+  const updatedGear = await Gear.findByIdAndUpdate(
+  gearId,
+  {
+    ...gearData,
+    ...(gearImages?.images && {
+      images: gearImages.images.map((img) => img.path),
+    }),
+  },
+  { new: true, runValidators: true }
+);
+
+return updatedGear
 };
 
 export const GearServices = {
