@@ -16,7 +16,6 @@ const gearSchema = new mongoose_1.Schema({
         required: true,
     },
     model: { type: String, required: true },
-    productType: { type: String, default: 'gear' },
     price: { type: Number, required: true },
     description: { type: String, required: true },
     features: { type: [String], default: [] },

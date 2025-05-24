@@ -9,15 +9,12 @@ const bike_controller_1 = require("./bike.controller");
 const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
 const bike_validation_1 = require("./bike.validation");
 const auth_1 = __importDefault(require("../../middlewares/auth"));
+const multer_config_1 = require("../../config/multer.config");
+const bodyParser_1 = require("../../middlewares/bodyParser");
 const router = express_1.default.Router();
-// router.post(
-//   '/create-product',
-//   auth('admin'),
-//   validateRequest(bikeValidation.bikeValidationCreateSchema),
-//   BikeControllers.createBike,
-// );
+router.post('/create-bike', (0, auth_1.default)('admin'), multer_config_1.multerUpload.fields([{ name: 'images' }]), bodyParser_1.parseBody, (0, validateRequest_1.default)(bike_validation_1.bikeValidation.bikeValidationCreateSchema), bike_controller_1.BikeControllers.createBike);
 router.get('/:productId', bike_controller_1.BikeControllers.getSingleBike);
 router.get('/', bike_controller_1.BikeControllers.getAllBikes);
 router.delete('/:productId', (0, auth_1.default)('admin'), bike_controller_1.BikeControllers.deleteBike);
-router.patch('/:productId', (0, auth_1.default)('admin'), (0, validateRequest_1.default)(bike_validation_1.bikeValidation.bikeValidationUpdateSchema), bike_controller_1.BikeControllers.updateBike);
+router.patch('/:productId', (0, auth_1.default)('admin'), multer_config_1.multerUpload.fields([{ name: 'images' }]), bodyParser_1.parseBody, (0, validateRequest_1.default)(bike_validation_1.bikeValidation.bikeValidationUpdateSchema), bike_controller_1.BikeControllers.updateBike);
 exports.BikeRouter = router;

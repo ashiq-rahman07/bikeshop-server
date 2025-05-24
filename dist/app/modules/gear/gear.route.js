@@ -5,19 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GearRouter = void 0;
 const express_1 = __importDefault(require("express"));
+const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
 const auth_1 = __importDefault(require("../../middlewares/auth"));
 const gear_controller_1 = require("./gear.controller");
+const gear_validation_1 = require("./gear.validation");
+const bodyParser_1 = require("../../middlewares/bodyParser");
+const multer_config_1 = require("../../config/multer.config");
 const router = express_1.default.Router();
-// router.post(
-//   '/create-product',
-//   auth('admin'),
-//   validateRequest(bikeValidation.bikeValidationCreateSchema),
-//   BikeControllers.createBike,
-// );
+router.post('/create-gear', (0, auth_1.default)('admin'), multer_config_1.multerUpload.fields([{ name: 'images' }]), bodyParser_1.parseBody, (0, validateRequest_1.default)(gear_validation_1.GearValidation.gearValidationSchema), gear_controller_1.GearControllers.createGear);
 router.get('/:gearId', gear_controller_1.GearControllers.getSingleGear);
 router.get('/', gear_controller_1.GearControllers.getAllGears);
-router.delete('/:gearId', (0, auth_1.default)('admin'), gear_controller_1.GearControllers.getAllGears);
-router.patch('/:productId', (0, auth_1.default)('admin'), 
-// validateRequest(gearValidation.),
-gear_controller_1.GearControllers.updateGear);
+router.delete('/:gearId', (0, auth_1.default)('admin'), gear_controller_1.GearControllers.deleteGear);
+router.patch('/:gearId', (0, auth_1.default)('admin'), multer_config_1.multerUpload.fields([{ name: 'images' }]), bodyParser_1.parseBody, (0, validateRequest_1.default)(gear_validation_1.GearValidation.gearValidationUpdateSchema), gear_controller_1.GearControllers.updateGear);
 exports.GearRouter = router;

@@ -42,38 +42,23 @@ const bikeValidationCreateSchema = zod_1.z.object({
         rating: zod_1.z.number().min(0).max(5).optional(),
         reviewCount: zod_1.z.number().int().nonnegative().optional(),
         isStock: zod_1.z.boolean().optional(),
-        productType: zod_1.z.string().optional()
     }),
 });
 const bikeValidationUpdateSchema = zod_1.z.object({
     body: zod_1.z.object({
-        name: zod_1.z
-            .string()
-            .min(1, { message: 'Name is required and cannot be empty' })
-            .optional(),
+        name: zod_1.z.string().min(1).optional(),
         brand: exports.BikeBrandEnum.optional(),
-        model: zod_1.z
-            .string()
-            .min(1, { message: 'Model is required and cannot be empty' })
-            .optional(),
-        price: zod_1.z
-            .number()
-            .min(0, { message: 'Price must be a positive number' })
-            .optional(),
         category: exports.BikeCategoryEnum.optional(),
-        description: zod_1.z
-            .string()
-            .min(1, { message: 'Description is required and cannot be empty' })
-            .optional(),
-        quantity: zod_1.z
-            .number()
-            .int({ message: 'Quantity must be an integer' })
-            .min(0, { message: 'Quantity cannot be negative' })
-            .optional(),
-        bikeImg: zod_1.z.string().optional(),
-        inStock: zod_1.z
-            .boolean({ required_error: 'InStock status is required' })
-            .optional(),
+        model: zod_1.z.string().min(1).optional(),
+        price: zod_1.z.number().nonnegative().optional(),
+        description: zod_1.z.string().min(1).optional(),
+        features: zod_1.z.array(zod_1.z.string()).optional(),
+        specifications: zod_1.z.record(zod_1.z.string()).optional(),
+        stock: zod_1.z.number().int().nonnegative().optional(),
+        // images: z.array(z.string().url()),
+        rating: zod_1.z.number().min(0).max(5).optional(),
+        reviewCount: zod_1.z.number().int().nonnegative().optional(),
+        isStock: zod_1.z.boolean().optional(),
     }),
 });
 exports.bikeValidation = {

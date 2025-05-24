@@ -15,42 +15,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const bike_model_1 = require("../bikes/bike.model");
+const gear_model_1 = require("../gear/gear.model");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const order_utils_1 = require("./order.utils");
 const order_model_1 = __importDefault(require("./order.model"));
 const createOrder = (user, payload, client_ip) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    if (!((_a = payload === null || payload === void 0 ? void 0 : payload.products) === null || _a === void 0 ? void 0 : _a.length))
+    const bikes = payload.bikes || [];
+    const gears = payload.gears || [];
+    if (!bikes.length && !gears.length)
         throw new AppError_1.default(http_status_1.default.NOT_ACCEPTABLE, 'Order is not specified');
     try {
-        const products = payload.products;
-        // Validate items and check stock
-        for (const bike of products) {
-            const product = yield bike_model_1.Bike.findById(bike.product);
-            if (!product) {
-                return new AppError_1.default(401, 'product not found');
-            }
-            yield bike_model_1.Bike.findByIdAndUpdate(bike.product, {
-                $inc: { quantity: -bike.quantity }, // Reduce stock by the ordered quantity
-            });
-        }
-        // for (const bike of products) {
-        //   await Bike.findByIdAndUpdate(bike.product, {
-        //     $inc: { quantity: -bike.quantity }, // Reduce stock by the ordered quantity
-        //   });
-        // }
         let totalPrice = 0;
-        const productDetails = yield Promise.all(products.map((item) => __awaiter(void 0, void 0, void 0, function* () {
-            const product = yield bike_model_1.Bike.findById(item.product);
-            if (product) {
-                const subtotal = product ? (product.price || 0) * item.quantity : 0;
-                totalPrice += subtotal;
-                return item;
-            }
-        })));
+        const products = [];
+        // Handle bikes
+        for (const item of bikes) {
+            const bike = yield bike_model_1.Bike.findById(item.product);
+            if (!bike)
+                throw new AppError_1.default(401, 'Bike not found');
+            // Use bike.stock instead of bike.quantity
+            if ((bike.stock || 0) < item.quantity)
+                throw new AppError_1.default(400, 'Not enough bike stock');
+            yield bike_model_1.Bike.findByIdAndUpdate(item.product, { $inc: { stock: -item.quantity } });
+            products.push({ product: item.product, quantity: item.quantity, productType: 'bike' });
+            totalPrice += (bike.price || 0) * item.quantity;
+        }
+        // Handle gears
+        for (const item of gears) {
+            const gear = yield gear_model_1.Gear.findById(item.product);
+            if (!gear)
+                throw new AppError_1.default(401, 'Gear not found');
+            if ((gear.stock || 0) < item.quantity)
+                throw new AppError_1.default(400, 'Not enough gear stock');
+            yield gear_model_1.Gear.findByIdAndUpdate(item.product, { $inc: { stock: -item.quantity } });
+            products.push({ product: item.product, quantity: item.quantity, productType: 'gear' });
+            totalPrice += (gear.price || 0) * item.quantity;
+        }
         let order = yield order_model_1.default.create({
             user,
-            products: productDetails,
+            products,
             totalPrice,
         });
         // payment integration

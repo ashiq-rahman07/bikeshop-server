@@ -13,20 +13,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BikeServices = void 0;
+const http_status_codes_1 = require("http-status-codes");
 const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
+const AppError_1 = __importDefault(require("../../errors/AppError"));
 const bike_constant_1 = require("./bike.constant");
 const bike_model_1 = require("./bike.model");
-// const createBikeIntoDB = async (file: any, bikeData: IBike) => {
-//   if (file) {
-//     const imageName = `${bikeData?.brand}${bikeData?.name}`;
-//     const path = file?.path;
-//     //send image to cloudinary
-//     const { secure_url } = await sendImageToCloudinary(imageName, path);
-//     bikeData.bikeImg = secure_url as string;
-//   }
-//   const result = await Bike.create(bikeData);
-//   return result;
-// };
+const createBike = (bikData, gearImages, authUser) => __awaiter(void 0, void 0, void 0, function* () {
+    const { images } = gearImages;
+    if (!images || images.length === 0) {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, 'Gear images are required.');
+    }
+    bikData.images = images.map((image) => image.path);
+    const createGear = new bike_model_1.Bike(Object.assign({}, bikData));
+    const result = yield createGear.save();
+    // houseData.images = images.map((image) => image.path);
+    // const rentalHouse = await RentalHouse.create(houseData);
+    // return rentalHouse;
+    return result;
+});
 const getAllBikesFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const bikeQuery = new QueryBuilder_1.default(bike_model_1.Bike.find(), query)
         .search(bike_constant_1.bikeSearchableFields)
@@ -49,14 +53,14 @@ const deleteBikeFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () 
     const result = yield bike_model_1.Bike.findByIdAndDelete(id);
     return result;
 });
-const updateBikeFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield bike_model_1.Bike.findByIdAndUpdate({ _id: id }, payload, {
-        new: true,
-    });
-    return result;
+const updateBikeFromDB = (bikeId, bikeData, bikeImages) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedBike = yield bike_model_1.Bike.findByIdAndUpdate(bikeId, Object.assign(Object.assign({}, bikeData), ((bikeImages === null || bikeImages === void 0 ? void 0 : bikeImages.images) && {
+        images: bikeImages.images.map((img) => img.path),
+    })), { new: true, runValidators: true });
+    return updatedBike;
 });
 exports.BikeServices = {
-    // createBikeIntoDB,
+    createBike,
     getAllBikesFromDB,
     getSingleBike,
     deleteBikeFromDB,

@@ -7,6 +7,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 dotenv_1.default.config({ path: path_1.default.join((process.cwd(), '.env')) });
 exports.default = {
+    cors_url: process.env.CORS_URL,
     port: process.env.PORT,
     database_url: process.env.DATABASE_URL,
     bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,

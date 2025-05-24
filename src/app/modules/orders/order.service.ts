@@ -1,5 +1,6 @@
 import httpStatus from 'http-status';
 import { Bike } from '../bikes/bike.model';
+import { Gear } from '../gear/gear.model';
 
 import { CreateOrderResponse, TOrder } from './order.interface';
 import { Request, Response } from 'express';
@@ -13,49 +14,45 @@ import { clear } from 'console';
 
 const createOrder = async (
   user: TUser,
-  payload: { products: { product: string; quantity: number }[] },
+  payload: {
+    bikes?: { product: string; quantity: number }[];
+    gears?: { product: string; quantity: number }[];
+  },
   client_ip: string,
 ) => {
-  if (!payload?.products?.length)
+  const bikes = payload.bikes || [];
+  const gears = payload.gears || [];
+  if (!bikes.length && !gears.length)
     throw new AppError(httpStatus.NOT_ACCEPTABLE, 'Order is not specified');
 
   try {
-    const products = payload.products;
+    let totalPrice = 0;
+    const products: { product: string; quantity: number; productType: 'bike' | 'gear' }[] = [];
 
-    // Validate items and check stock
-    for (const bike of products) {
-      const product = await Bike.findById(bike.product);
-
-      if (!product) {
-        return new AppError(401, 'product not found');
-      }
-
-      await Bike.findByIdAndUpdate(bike.product, {
-        $inc: { quantity: -bike.quantity }, // Reduce stock by the ordered quantity
-      });
+    // Handle bikes
+    for (const item of bikes) {
+      const bike = await Bike.findById(item.product);
+      if (!bike) throw new AppError(401, 'Bike not found');
+      // Use bike.stock instead of bike.quantity
+      if ((bike.stock || 0) < item.quantity) throw new AppError(400, 'Not enough bike stock');
+      await Bike.findByIdAndUpdate(item.product, { $inc: { stock: -item.quantity } });
+      products.push({ product: item.product, quantity: item.quantity, productType: 'bike' });
+      totalPrice += (bike.price || 0) * item.quantity;
     }
 
-    // for (const bike of products) {
-    //   await Bike.findByIdAndUpdate(bike.product, {
-    //     $inc: { quantity: -bike.quantity }, // Reduce stock by the ordered quantity
-    //   });
-    // }
-    let totalPrice = 0;
-
-    const productDetails = await Promise.all(
-      products.map(async (item) => {
-        const product = await Bike.findById(item.product);
-        if (product) {
-          const subtotal = product ? (product.price || 0) * item.quantity : 0;
-          totalPrice += subtotal;
-          return item;
-        }
-      }),
-    );
+    // Handle gears
+    for (const item of gears) {
+      const gear = await Gear.findById(item.product);
+      if (!gear) throw new AppError(401, 'Gear not found');
+      if ((gear.stock || 0) < item.quantity) throw new AppError(400, 'Not enough gear stock');
+      await Gear.findByIdAndUpdate(item.product, { $inc: { stock: -item.quantity } });
+      products.push({ product: item.product, quantity: item.quantity, productType: 'gear' });
+      totalPrice += (gear.price || 0) * item.quantity;
+    }
 
     let order = await Order.create({
       user,
-      products: productDetails,
+      products,
       totalPrice,
     });
 

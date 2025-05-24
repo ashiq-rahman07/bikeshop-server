@@ -9,16 +9,9 @@ const OrderSchema = new mongoose_1.Schema({
     },
     products: [
         {
-            product: {
-                type: mongoose_1.Schema.Types.ObjectId,
-                ref: 'Bike',
-                required: true,
-            },
-            quantity: {
-                type: Number,
-                required: true,
-                min: 1,
-            },
+            product: { type: mongoose_1.Types.ObjectId, required: true },
+            quantity: { type: Number, required: true },
+            productType: { type: String, enum: ['bike', 'gear'], required: true }, // NEW
         },
     ],
     totalPrice: {

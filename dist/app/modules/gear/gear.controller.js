@@ -18,15 +18,17 @@ const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const gear_service_1 = require("./gear.service");
-// const createGear = catchAsync(async (req, res) => {
-//   const result = await BikeServices.createBikeIntoDB(req.file, req.body);
-//   sendResponse(res, {
-//     success: true,
-//     message: 'Product are created successfully',
-//     statusCode: httpStatus.OK,
-//     data: result,
-//   });
-// });
+const createGear = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //  const files = req.files;
+    //  const user = req.user
+    const result = yield gear_service_1.GearServices.createGear(req.body, req.files, req.user);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        message: 'Product are created successfully',
+        statusCode: http_status_1.default.OK,
+        data: result,
+    });
+}));
 const getAllGears = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield gear_service_1.GearServices.getAllGears(req.query);
     (0, sendResponse_1.default)(res, {
@@ -76,10 +78,9 @@ const deleteGear = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 const updateGear = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { gearId } = req.params;
-        const updateGearData = req.body;
-        const result = yield gear_service_1.GearServices.updateGear(gearId, updateGearData);
+        const result = yield gear_service_1.GearServices.updateGear(gearId, req.body, req.files);
         res.status(200).json({
-            message: 'Bike are update succesfully',
+            message: 'Gear are update successfully',
             status: true,
             data: result,
         });
@@ -93,6 +94,7 @@ const updateGear = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.GearControllers = {
+    createGear,
     getAllGears,
     getSingleGear,
     deleteGear,
