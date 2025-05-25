@@ -9,7 +9,8 @@ import AppError from '../../errors/AppError';
 
 const createOrder = catchAsync(async (req, res) => {
   const user = req.user;
-
+  const {products} = req.body;
+console.log(products)
   const order = await OrderService.createOrder(user, req.body, req.ip!);
 
   sendResponse(res, {
@@ -56,24 +57,24 @@ const getUserOrders = async (req: Request, res: Response) => {
   }
 };
 
-const getTotalRevenue = async (req: Request, res: Response) => {
-  try {
-    const totalRevenue = await OrderService.getTotalRevenue(req, res);
-    res.status(200).json({
-      success: true,
-      message: 'Total revenue calculated successfully.',
-      data: {
-        totalRevenue,
-      },
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to calculate total revenue.',
-      error: error.message,
-    });
-  }
-};
+// const getTotalRevenue = async (req: Request, res: Response) => {
+//   try {
+//     const totalRevenue = await OrderService.getTotalRevenue(req, res);
+//     res.status(200).json({
+//       success: true,
+//       message: 'Total revenue calculated successfully.',
+//       data: {
+//         totalRevenue,
+//       },
+//     });
+//   } catch (error: any) {
+//     res.status(500).json({
+//       success: false,
+//       message: 'Failed to calculate total revenue.',
+//       error: error.message,
+//     });
+//   }
+// };
 
 const verifyPayment = catchAsync(async (req, res) => {
   const order = await OrderService.verifyPayment(req.query.order_id as string);
@@ -138,7 +139,7 @@ export const OrderControllers = {
   createOrder,
   getUserOrders,
   getAllOrders,
-  getTotalRevenue,
+  // getTotalRevenue,
   verifyPayment,
   getSingleUsers,
   updateOrder,

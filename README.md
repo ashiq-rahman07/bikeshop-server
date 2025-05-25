@@ -103,9 +103,9 @@ Contributions, issues, and feature requests are welcome! Please open an issue or
 
 ---
 
-## 📄 License
 
-This project is [MIT](LICENSE) licensed.
+
+
 
 ---
 

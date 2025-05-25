@@ -1,78 +1,84 @@
+// import { products } from '@/data/products';
 import httpStatus from 'http-status';
 import { Bike } from '../bikes/bike.model';
 import { Gear } from '../gear/gear.model';
-
-import { CreateOrderResponse, TOrder } from './order.interface';
-import { Request, Response } from 'express';
-// import { Order } from './order.model';
 import { TUser } from '../user/user.interface';
 import AppError from '../../errors/AppError';
 import { orderUtils } from './order.utils';
 import Order from './order.model';
-import { clear } from 'console';
+import { TOrder } from './order.interface';
 
 
 const createOrder = async (
   user: TUser,
-  payload: {
-    bikes?: { product: string; quantity: number }[];
-    gears?: { product: string; quantity: number }[];
+  orderInfo: {
+    products: Array<{
+      productId: string;
+      productName: string;
+      productImg: string;
+      quantity: number;
+      productType: 'bike' | 'gear';
+      price: number;
+    }>;
+    totalPrice: number;
+    shippingAddress: any;
+    orderDate: string;
   },
   client_ip: string,
 ) => {
-  const bikes = payload.bikes || [];
-  const gears = payload.gears || [];
-  if (!bikes.length && !gears.length)
+  if (!orderInfo.products || !orderInfo.products.length) {
     throw new AppError(httpStatus.NOT_ACCEPTABLE, 'Order is not specified');
+  }
 
   try {
     let totalPrice = 0;
-    const products: { product: string; quantity: number; productType: 'bike' | 'gear' }[] = [];
+    const products: TOrder[] = [];
 
-    // Handle bikes
-    for (const item of bikes) {
-      const bike = await Bike.findById(item.product);
-      if (!bike) throw new AppError(401, 'Bike not found');
-      // Use bike.stock instead of bike.quantity
-      if ((bike.stock || 0) < item.quantity) throw new AppError(400, 'Not enough bike stock');
-      await Bike.findByIdAndUpdate(item.product, { $inc: { stock: -item.quantity } });
-      products.push({ product: item.product, quantity: item.quantity, productType: 'bike' });
-      totalPrice += (bike.price || 0) * item.quantity;
-    }
-
-    // Handle gears
-    for (const item of gears) {
-      const gear = await Gear.findById(item.product);
-      if (!gear) throw new AppError(401, 'Gear not found');
-      if ((gear.stock || 0) < item.quantity) throw new AppError(400, 'Not enough gear stock');
-      await Gear.findByIdAndUpdate(item.product, { $inc: { stock: -item.quantity } });
-      products.push({ product: item.product, quantity: item.quantity, productType: 'gear' });
-      totalPrice += (gear.price || 0) * item.quantity;
+    for (const item of orderInfo.products) {
+      // Use 'new' with ObjectId constructor
+      const productIdObj = typeof item.productId === 'string' ? new (require('mongoose').Types.ObjectId)(item.productId) : item.productId;
+      if (item.productType === 'bike') {
+        const bike = await Bike.findById(productIdObj);
+        if (!bike) throw new AppError(401, 'Bike not found');
+        if ((bike.stock || 0) < item.quantity) throw new AppError(400, 'Not enough bike stock');
+        await Bike.findByIdAndUpdate(productIdObj, { $inc: { stock: -item.quantity } });
+        products.push({ ...item, productId: productIdObj });
+        totalPrice += (bike.price || 0) * item.quantity;
+      } else if (item.productType === 'gear') {
+        const gear = await Gear.findById(productIdObj);
+        if (!gear) throw new AppError(401, 'Gear not found');
+        if ((gear.stock || 0) < item.quantity) throw new AppError(400, 'Not enough gear stock');
+        await Gear.findByIdAndUpdate(productIdObj, { $inc: { stock: -item.quantity } });
+        products.push({ ...item, productId: productIdObj });
+        totalPrice += (gear.price || 0) * item.quantity;
+      }
     }
 
     let order = await Order.create({
       user,
       products,
       totalPrice,
+      shippingAddress: orderInfo.shippingAddress,
+      orderDate: orderInfo.orderDate,
     });
 
-    // payment integration
-    const shurjopayPayload = {
+    // Payment integration (optional)
+    const shurjopayPayload: any = {
       amount: totalPrice,
       order_id: order._id,
       currency: 'BDT',
       customer_name: user.name,
-      customer_address: 'abccv',
-      customer_email: 'dsgres',
-      customer_phone: 'sdgersrgh',
-      customer_city: 'rsdgersg',
+      customer_address: orderInfo.shippingAddress?.streetAddress || '',
+      customer_email: user.email || '',
+      customer_phone: orderInfo.shippingAddress?.phone || '',
+      customer_city: orderInfo.shippingAddress?.city || '',
       client_ip,
     };
 
-    const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
+    const payment: any = await orderUtils.makePaymentAsync(shurjopayPayload);
 
     if (payment?.transactionStatus) {
-      order = await order.updateOne({
+      await order.updateOne({
         transaction: {
           id: payment.sp_order_id,
           transactionStatus: payment.transactionStatus,
@@ -80,9 +86,10 @@ const createOrder = async (
       });
     }
 
-    return payment.checkout_url;
+    return payment?.checkout_url;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
@@ -96,51 +103,51 @@ const getUserOrders = async (userId: string) => {
   return result;
 };
 
-const getTotalRevenue = async (req: Request, res: Response) => {
-  try {
-    const totalRevenue = await Order.aggregate([
-      //stage-1
-      {
-        // Join orders with bikes to get bike details
-        $lookup: {
-          from: 'bikes',
-          localField: 'product',
-          foreignField: '_id',
-          as: 'bikeDetails',
-        },
-      },
-      //stage-2
-      {
-        // Unwind the bikeDetails array to simplify access
-        $unwind: '$bikeDetails',
-      },
+// const getTotalRevenue = async (req: Request, res: Response) => {
+//   try {
+//     const totalRevenue = await Order.aggregate([
+//       //stage-1
+//       {
+//         // Join orders with bikes to get bike details
+//         $lookup: {
+//           from: 'bikes',
+//           localField: 'product',
+//           foreignField: '_id',
+//           as: 'bikeDetails',
+//         },
+//       },
+//       //stage-2
+//       {
+//         // Unwind the bikeDetails array to simplify access
+//         $unwind: '$bikeDetails',
+//       },
 
-      //stage-3
-      {
-        // Calculate total price for each order
-        $addFields: {
-          orderRevenue: { $multiply: ['$bikeDetails.price', '$quantity'] },
-        },
-      },
+//       //stage-3
+//       {
+//         // Calculate total price for each order
+//         $addFields: {
+//           orderRevenue: { $multiply: ['$bikeDetails.price', '$quantity'] },
+//         },
+//       },
 
-      //stage-4
-      {
-        // Group to calculate total revenue
-        $group: {
-          _id: null, // Group all documents together
-          totalRevenue: { $sum: '$orderRevenue' },
-        },
-      },
-    ]);
-    return totalRevenue[0]?.totalRevenue || 0;
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: 'Failed to calculate total revenue.',
-      error: error.message,
-    });
-  }
-};
+//       //stage-4
+//       {
+//         // Group to calculate total revenue
+//         $group: {
+//           _id: null, // Group all documents together
+//           totalRevenue: { $sum: '$orderRevenue' },
+//         },
+//       },
+//     ]);
+//     return totalRevenue[0]?.totalRevenue || 0;
+//   } catch (error: any) {
+//     return res.status(500).json({
+//       success: false,
+//       message: 'Failed to calculate total revenue.',
+//       error: error.message,
+//     });
+//   }
+// };
 
 const verifyPayment = async (order_id: string) => {
   const verifiedPayment = await orderUtils.verifyPaymentAsync(order_id);
@@ -205,7 +212,7 @@ export const OrderService = {
   createOrder,
   getUserOrders,
   getAllOrders,
-  getTotalRevenue,
+  // getTotalRevenue,
   verifyPayment,
   getSingleOrder,
   updateOrder,

@@ -9,7 +9,9 @@ const OrderSchema = new mongoose_1.Schema({
     },
     products: [
         {
-            product: { type: mongoose_1.Types.ObjectId, required: true },
+            productId: { type: mongoose_1.Types.ObjectId, required: true },
+            productName: { type: String, required: true },
+            productImg: { type: String, required: true },
             quantity: { type: Number, required: true },
             productType: { type: String, enum: ['bike', 'gear'], required: true }, // NEW
         },
@@ -23,6 +25,9 @@ const OrderSchema = new mongoose_1.Schema({
         enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
         default: 'Pending',
     },
+    shippingAddress: { type: Object, required: true },
+    orderDate: { type: Date, default: Date.now }, // default current time
+    estimatedDeliveryDate: { type: Date },
     transaction: {
         id: String,
         transactionStatus: String,
@@ -37,6 +42,14 @@ const OrderSchema = new mongoose_1.Schema({
     toJSON: {
         virtuals: true,
     },
+});
+OrderSchema.pre('save', function (next) {
+    if (!this.estimatedDeliveryDate) {
+        const deliveryDate = new Date();
+        deliveryDate.setDate(deliveryDate.getDate() + 7); // Add 7 days
+        this.estimatedDeliveryDate = deliveryDate;
+    }
+    next();
 });
 const Order = (0, mongoose_1.model)('Order', OrderSchema);
 exports.default = Order;

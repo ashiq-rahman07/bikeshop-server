@@ -20,6 +20,8 @@ const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
+    const { products } = req.body;
+    console.log(products);
     const order = yield order_service_1.OrderService.createOrder(user, req.body, req.ip);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
@@ -62,25 +64,24 @@ const getUserOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
 });
-const getTotalRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const totalRevenue = yield order_service_1.OrderService.getTotalRevenue(req, res);
-        res.status(200).json({
-            success: true,
-            message: 'Total revenue calculated successfully.',
-            data: {
-                totalRevenue,
-            },
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Failed to calculate total revenue.',
-            error: error.message,
-        });
-    }
-});
+// const getTotalRevenue = async (req: Request, res: Response) => {
+//   try {
+//     const totalRevenue = await OrderService.getTotalRevenue(req, res);
+//     res.status(200).json({
+//       success: true,
+//       message: 'Total revenue calculated successfully.',
+//       data: {
+//         totalRevenue,
+//       },
+//     });
+//   } catch (error: any) {
+//     res.status(500).json({
+//       success: false,
+//       message: 'Failed to calculate total revenue.',
+//       error: error.message,
+//     });
+//   }
+// };
 const verifyPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const order = yield order_service_1.OrderService.verifyPayment(req.query.order_id);
     (0, sendResponse_1.default)(res, {
@@ -134,7 +135,7 @@ exports.OrderControllers = {
     createOrder,
     getUserOrders,
     getAllOrders,
-    getTotalRevenue,
+    // getTotalRevenue,
     verifyPayment,
     getSingleUsers,
     updateOrder,

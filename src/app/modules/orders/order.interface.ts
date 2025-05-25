@@ -2,25 +2,39 @@ import { Document, Model, Types } from 'mongoose';
 
 export type CreateOrderResponse =
   | { success: false; message: string }
-  | { success: true; data: TOrder };
+  | { success: true; data: IOrder };
+
 
 export type TOrder = {
-  user: Types.ObjectId;
-  product: Types.ObjectId;
-  quantity: number;
-  totalPrice: number;
+  productId: Types.ObjectId;
+    productName: string;
+    productImg: string;
+    quantity: number;
+    productType: 'gear' | 'bike';
 };
 
 export interface IOrder extends Document {
   user: Types.ObjectId;
   products: {
-    product: Types.ObjectId;
+    productId: Types.ObjectId;
+    productName: string;
+    productImg: string;
     quantity: number;
-     productType: 'gear' | 'bike';
+    productType: 'gear' | 'bike';
   }[];
   totalPrice: number;
   status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
- 
+  shippingAddress: {
+    fullName: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+    phone: string;
+  };
+  orderDate: Date; // ISO date string
+  estimatedDeliveryDate?: Date; // ISO date string
   transaction: {
     id: string;
     transactionStatus: string;
@@ -30,8 +44,45 @@ export interface IOrder extends Document {
     method: string;
     date_time: string;
   };
-  createdAt?: Date;
-  updatedAt?: Date;
+  
 }
 
 // export type OrderModel = Model<TOrder, Record<string, unknown>>;
+interface Order {
+  id: string;
+  userId: string;
+  items: Array<{
+    product: {
+      id: string;
+      name: string;
+      brand: string;
+      category: string;
+      model: string;
+      price: number;
+      originalPrice: number;
+      description: string;
+      features: string[];
+      specifications: Record<string, string>;
+      stock: number;
+      images: string[];
+      rating: number;
+      reviewCount: number;
+      isFeatured: boolean;
+    };
+    quantity: number;
+  }>;
+  totalAmount: number;
+  status: string;
+  paymentMethod: string;
+  shippingAddress: {
+    fullName: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+    phone: string;
+  };
+  orderDate: string; // ISO date string
+  estimatedDeliveryDate: string; // ISO date string
+}

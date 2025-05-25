@@ -25,6 +25,7 @@ export const BikeBrandEnum = z.enum([
   'Suzuki',
   'Hero',
 ]);
+
 // Define the Zod schema
 const bikeValidationCreateSchema = z.object({
   body: z.object({

@@ -5,7 +5,7 @@ import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
-router.post('/create-order', auth('customer'), OrderControllers.createOrder);
+router.post('/create-order', auth('customer','admin'), OrderControllers.createOrder);
 router.get(
   '/verify',
   auth('admin', 'customer'),
@@ -20,6 +20,6 @@ router.patch(
   OrderControllers.updateOrderStatus,
 );
 router.delete('/:orderId', auth('admin'), OrderControllers.deleteUser);
-router.get('/revenue', OrderControllers.getTotalRevenue);
+// router.get('/revenue', OrderControllers.getTotalRevenue);
 
 export const OrderRouter = router;
